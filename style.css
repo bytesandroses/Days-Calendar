@@ -1,0 +1,12 @@
+#calendarTable {
+  width: 100%;
+  border: 1px solid #ccc;
+}
+
+#calendarTable th {
+  border: 1px solid #ccc;
+  width: 14.28%;
+  height: 100px;
+  text-align: center;
+  vertical-align: center;
+}
