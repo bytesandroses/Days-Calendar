@@ -108,4 +108,14 @@ let currentDate = new Date();
 
 window.onload = () => {
   renderCalendar(currentDate.getFullYear(), currentDate.getMonth());
+
+  document.getElementById("prevMonthBtn").addEventListener("click", () => {
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    renderCalendar(currentDate.getFullYear(), currentDate.getMonth());
+  });
+
+  document.getElementById("nextMonthBtn").addEventListener("click", () => {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    renderCalendar(currentDate.getFullYear(), currentDate.getMonth());
+  });
 };
