@@ -47,12 +47,3 @@ export function getOccurrenceDate(year, monthName, dayName, occurrence) {
             : null;
   return result;
 }
-
-export function generateCalendar(year, month) {
-  const calendarGrid = [];
-  const inputDate = new Date(year, month, 1);
-  const firstDay = inputDate.getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-  TODO;
-}
