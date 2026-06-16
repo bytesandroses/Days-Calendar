@@ -1,44 +1,12 @@
-import { getOccurrenceDate, monthNumber } from "./common.mjs";
+import {
+  getOccurrenceDate,
+  monthNumber,
+  getCalendarRange,
+  getSpecialDays,
+} from "./common.mjs";
 import daysData from "./days.json" with { type: "json" };
 
-function getCalendarRange(year, month) {
-  const firstDay = new Date(year, month, 1, 12, 0, 0);
-  const lastDay = new Date(year, month + 1, 0, 12, 0, 0);
-
-  const start = new Date(firstDay);
-  start.setDate(firstDay.getDate() - firstDay.getDay());
-
-  const end = new Date(lastDay);
-  end.setDate(lastDay.getDate() + (6 - lastDay.getDay()));
-
-  return { start, end };
-}
-
-function getSpecialDays(year, month) {
-  const specials = {};
-
-  for (let i = 0; i < daysData.length; i++) {
-    const day = daysData[i];
-
-    if (monthNumber[day.monthName] === month) {
-      const dateNum = getOccurrenceDate(
-        year,
-        day.monthName,
-        day.dayName,
-        day.occurrence,
-      );
-
-      if (dateNum !== null) {
-        if (specials[dateNum] === undefined) {
-          specials[dateNum] = [];
-        }
-        specials[dateNum].push(day);
-      }
-    }
-  }
-
-  return specials;
-}
+let currentDate = new Date();
 
 function renderCalendar(year, month) {
   const tbody = document.getElementById("calendarDays");
@@ -104,27 +72,34 @@ function renderCalendar(year, month) {
   document.getElementById("yearInput").value = year;
 }
 
-let currentDate = new Date();
+function setupHandlers() {
+  const prevBtn = document.getElementById("prevMonthBtn");
+  const nextBtn = document.getElementById("nextMonthBtn");
+  const generateBtn = document.getElementById("generateCalendar");
+  const monthSelector = document.getElementById("monthSelector");
+  const yearInput = document.getElementById("yearInput");
 
-window.onload = () => {
-  renderCalendar(currentDate.getFullYear(), currentDate.getMonth());
-
-  document.getElementById("prevMonthBtn").addEventListener("click", () => {
+  prevBtn.addEventListener("click", () => {
     currentDate.setMonth(currentDate.getMonth() - 1);
     renderCalendar(currentDate.getFullYear(), currentDate.getMonth());
   });
 
-  document.getElementById("nextMonthBtn").addEventListener("click", () => {
+  nextBtn.addEventListener("click", () => {
     currentDate.setMonth(currentDate.getMonth() + 1);
     renderCalendar(currentDate.getFullYear(), currentDate.getMonth());
   });
 
-  document.getElementById("generateCalendar").addEventListener("click", () => {
-    const m = parseInt(document.getElementById("monthSelector").value, 10);
-    const y = parseInt(document.getElementById("yearInput").value, 10);
-    if (!isNaN(y)) {
-      currentDate = new Date(y, m, 1);
-      renderCalendar(y, m);
+  generateBtn.addEventListener("click", () => {
+    const month = parseInt(monthSelector.value, 10);
+    const year = parseInt(yearInput.value, 10);
+
+    if (!isNaN(year)) {
+      currentDate = new Date(year, month, 1);
+      renderCalendar(year, month);
     }
   });
+}
+window.onload = () => {
+  renderCalendar(currentDate.getFullYear(), currentDate.getMonth());
+  setupHandlers();
 };

@@ -1,3 +1,5 @@
+import daysData from "./days.json" with { type: "json" };
+
 export const monthNumber = {
   January: 0,
   February: 1,
@@ -46,4 +48,43 @@ export function getOccurrenceDate(year, monthName, dayName, occurrence) {
             ? lastDayOfMonth - ((lastDayOfWeek - targetWeekday + 7) % 7)
             : null;
   return result;
+}
+
+export function getCalendarRange(year, month) {
+  const firstDay = new Date(year, month, 1, 12, 0, 0);
+  const lastDay = new Date(year, month + 1, 0, 12, 0, 0);
+
+  const start = new Date(firstDay);
+  start.setDate(firstDay.getDate() - firstDay.getDay());
+
+  const end = new Date(lastDay);
+  end.setDate(lastDay.getDate() + (6 - lastDay.getDay()));
+
+  return { start, end };
+}
+
+export function getSpecialDays(year, month) {
+  const specials = {};
+
+  for (let i = 0; i < daysData.length; i++) {
+    const day = daysData[i];
+
+    if (monthNumber[day.monthName] === month) {
+      const dateNum = getOccurrenceDate(
+        year,
+        day.monthName,
+        day.dayName,
+        day.occurrence,
+      );
+
+      if (dateNum !== null) {
+        if (specials[dateNum] === undefined) {
+          specials[dateNum] = [];
+        }
+        specials[dateNum].push(day);
+      }
+    }
+  }
+
+  return specials;
 }
