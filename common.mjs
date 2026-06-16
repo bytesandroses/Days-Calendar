@@ -1,4 +1,4 @@
-const monthNumber = {
+export const monthNumber = {
   January: 0,
   February: 1,
   March: 2,

@@ -1,4 +1,4 @@
-import getOccurrenceDate from "./common.mjs";
+import { getOccurrenceDate, monthNumber } from "./common.mjs";
 import daysData from "./days.json" with { type: "json" };
 
 function getCalendarRange(year, month) {
@@ -39,3 +39,73 @@ function getSpecialDays(year, month) {
 
   return specials;
 }
+
+function renderCalendar(year, month) {
+  const tbody = document.getElementById("calendarDays");
+  tbody.innerHTML = "";
+
+  const { start, end } = getCalendarRange(year, month);
+  const specials = getSpecialDays(year, month);
+
+  let row = document.createElement("tr");
+  const current = new Date(start);
+
+  while (current <= end) {
+    const cell = document.createElement("td");
+    const dayNum = current.getDate();
+    const isCurrentMonth = current.getMonth() === month;
+
+    cell.textContent = dayNum;
+
+    if (!isCurrentMonth) {
+      cell.className = "other-month";
+    } else if (specials[dayNum] !== undefined) {
+      const names = specials[dayNum].map((d) => d.name).join(", ");
+      cell.innerHTML += `<br><span class="commemorative">${names}</span>`;
+    }
+
+    row.appendChild(cell);
+
+    if (current.getDay() === 6) {
+      tbody.appendChild(row);
+      row = document.createElement("tr");
+    }
+
+    current.setDate(current.getDate() + 1);
+  }
+
+  if (row.children.length) {
+    tbody.appendChild(row);
+  }
+
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  let caption = document.querySelector("#calendarTable caption");
+  if (!caption) {
+    caption = document.createElement("caption");
+    document.getElementById("calendarTable").prepend(caption);
+  }
+  caption.textContent = `${monthNames[month]} ${year}`;
+
+  document.getElementById("monthSelector").value = month;
+  document.getElementById("yearInput").value = year;
+}
+
+let currentDate = new Date();
+
+window.onload = () => {
+  renderCalendar(currentDate.getFullYear(), currentDate.getMonth());
+};
