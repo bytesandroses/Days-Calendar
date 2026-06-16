@@ -118,4 +118,13 @@ window.onload = () => {
     currentDate.setMonth(currentDate.getMonth() + 1);
     renderCalendar(currentDate.getFullYear(), currentDate.getMonth());
   });
+
+  document.getElementById("generateCalendar").addEventListener("click", () => {
+    const m = parseInt(document.getElementById("monthSelector").value, 10);
+    const y = parseInt(document.getElementById("yearInput").value, 10);
+    if (!isNaN(y)) {
+      currentDate = new Date(y, m, 1);
+      renderCalendar(y, m);
+    }
+  });
 };
