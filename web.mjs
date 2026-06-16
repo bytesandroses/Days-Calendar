@@ -13,3 +13,29 @@ function getCalendarRange(year, month) {
 
   return { start, end };
 }
+
+function getSpecialDays(year, month) {
+  const specials = {};
+
+  for (let i = 0; i < daysData.length; i++) {
+    const day = daysData[i];
+
+    if (monthNumber[day.monthName] === month) {
+      const dateNum = getOccurrenceDate(
+        year,
+        day.monthName,
+        day.dayName,
+        day.occurrence,
+      );
+
+      if (dateNum !== null) {
+        if (specials[dateNum] === undefined) {
+          specials[dateNum] = [];
+        }
+        specials[dateNum].push(day);
+      }
+    }
+  }
+
+  return specials;
+}
