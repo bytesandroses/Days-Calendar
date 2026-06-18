@@ -1,9 +1,78 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <script type="module" src="common.mjs"></script>
-        <script type="module" src="web.mjs"></script>
-    </head>
-    <body>
-    </body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="A calendar project that allows users to select a month and year to generate a calendar grid."
+    />
+    <title>Days Calendar Project</title>
+    <link rel="stylesheet" href="style.css" />
+    <script type="module" src="web.mjs" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Days Calendar Project</h1>
+    </header>
+    <main>
+      <section id="calendarSelector">
+        <label for="monthSelector">Select a Month:</label>
+        <select id="monthSelector">
+          <option value="0">January</option>
+          <option value="1">February</option>
+          <option value="2">March</option>
+          <option value="3">April</option>
+          <option value="4">May</option>
+          <option value="5">June</option>
+          <option value="6">July</option>
+          <option value="7">August</option>
+          <option value="8">September</option>
+          <option value="9">October</option>
+          <option value="10">November</option>
+          <option value="11">December</option>
+        </select>
+        <label for="yearInput">Enter Year:</label>
+        <input
+          type="number"
+          id="yearInput"
+          step="1"
+          min="1"
+          max="3000"
+          placeholder="Enter year"
+        />
+        <button id="generateCalendar">Generate Calendar</button>
+      </section>
+
+      <section id="calendarGrid">
+        <table id="calendarTable">
+          <thead>
+            <tr id="calendarHeader">
+              <th>Sunday</th>
+              <th>Monday</th>
+              <th>Tuesday</th>
+              <th>Wednesday</th>
+              <th>Thursday</th>
+              <th>Friday</th>
+              <th>Saturday</th>
+            </tr>
+          </thead>
+          <tbody id="calendarDays"></tbody>
+        </table>
+      </section>
+
+      <section id="switchMonth">
+        <button id="prevMonthBtn">Previous Month</button>
+        <button id="nextMonthBtn">Next Month</button>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        Built by
+        <a href="https://github.com/Elisabeth-Matulian">Elisabeth</a> and
+        <a href="https://github.com/bytesandroses">Isaac</a>
+      </p>
+    </footer>
+  </body>
 </html>
