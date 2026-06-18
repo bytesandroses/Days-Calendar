@@ -154,12 +154,33 @@ footer a {
     width: 100%;
   }
 
+  #calendarGrid {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #calendarTable thead th {
+    font-size: 0.75rem;
+    padding: 0.375rem 0.25rem;
+  }
+  #calendarTable thead th::before {
+    content: attr(data-abbr);
+  }
+  #calendarTable thead th {
+    font-size: 0;
+  }
+  #calendarTable thead th::before {
+    font-size: 0.75rem;
+    display: block;
+  }
+
   #calendarTable td {
-    height: 70px;
+    height: 60px;
     font-size: 0.8125rem;
+    padding: 0.375rem;
   }
 
   .commemorative {
-    font-size: 0.6875rem;
+    font-size: 0.625rem;
   }
 }
